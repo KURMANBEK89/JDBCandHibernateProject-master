@@ -31,7 +31,7 @@ public class UserDaoJdbcImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        String SQL = "DROP TABLE users;";
+        String SQL = "DROP TABLE IF EXISTS users;";
         try(Connection conn = Util.connection()){
             Statement statement = conn.createStatement();
             statement.executeUpdate(SQL);
@@ -48,16 +48,19 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(2, lastName);
             statement.setByte(3, age);
             statement.executeUpdate();
+            System.out.println(name + " added to table");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void removeUserById(long id) {
-        String SQL = "DELETE * FROM users WHERE id = ?;";
+        String SQL = "DELETE FROM users WHERE id = ?;";
         try(Connection conn = Util.connection()){
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(SQL);
+            PreparedStatement statement = conn.prepareStatement(SQL);
+            statement.setLong(1,id);
+            boolean resultSet = statement.execute();
+            System.out.println("user by " + id + " removed from table");
         }catch (SQLException e){
             e.printStackTrace();
         }

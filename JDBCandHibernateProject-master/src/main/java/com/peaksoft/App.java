@@ -12,7 +12,7 @@ public class App
         userDaoJdbc.createUsersTable();
         userDaoJdbc.saveUser("Kurmanbek", "Mambetomurov", (byte) 33);
         userDaoJdbc.saveUser("Amina","Jalilova", (byte) 29);
-        userDaoJdbc.getAllUsers();
+        System.out.println(userDaoJdbc.getAllUsers());
         userDaoJdbc.removeUserById(1);
         userDaoJdbc.cleanUsersTable();
         userDaoJdbc.dropUsersTable();
